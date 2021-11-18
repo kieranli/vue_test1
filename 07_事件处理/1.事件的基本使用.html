@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1.事件的基本使用</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+    <!-- 
+        事件的基本使用：
+            1.使用v-on:xxx或@xxx绑定事件，其中xxx是事件名。
+            2.事件的回调需要配置在methods对象中，最终会在vm上。
+            3.methods中配置的函数，不要用箭头函数！否则this就不是vm了。
+            4.methods中配置的函数，都是被Vue所管理的函数，this的指向是vm或组件实例对象。
+            5.@click="demo" 和 @click="demo($event)"效果一致，但后者可以传参，不写$event会导致传参后event丢失。
+     -->
+    <!-- 准备好一个容器 -->
+    <div id="root">
+        <h2>欢迎{{name}}</h2>
+        <!-- v-on(当)click(点击)时，触发showInfo事件 -->
+        <button v-on:click="showInfo1">点我提示信息（不传参）</button>
+        <!-- 简写为 -->
+        <button @click="showInfo2($event,66)">点我提示信息（传参）</button>
+    </div>
+    <script type="text/javascript">
+    Vue.config.productionTip=false;//阻止vue在启动时生成生产提示
+    const vm=new Vue({
+        el:'#root',
+        data(){
+           return{
+              name:'这个b'
+           }
+        },
+        methods:{
+            showInfo1(event){
+                // console.log(event.target); //默认传event值，常用event.target拿到发生事件的事件目标
+                // console.log(event.target.innerText); //取元素里的文字
+                // console.log(this);//此处的this表示vm
+                alert("恭喜这个b!");
+
+            },
+            showInfo2(event,number){
+                console.log(event,number);
+                // console.log(event.target); //默认传event值，常用event.target拿到发生事件的事件目标
+                // console.log(event.target.innerText); //取元素里的文字
+                // console.log(this);//此处的this表示vm
+                // alert("恭喜这个b!");
+
+            }
+
+        }
+    })
+    </script>
+</body>
+</html>

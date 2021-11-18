@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2.事件修饰符</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <style>
+        *{
+            margin:20px;
+        }
+        .button1{
+            height:50px;
+            width:200px;
+            background-color: skyblue;
+        }
+        .box1{
+            height:80px;
+            width:200px;
+            padding:5px;
+            background-color: skyblue;
+        }
+        .box2{
+            height:30px;
+            background-color: green;
+        }
+        .list{
+            height:200px;
+            width:200px;
+            background-color: greenyellow;
+            overflow: auto;
+        }
+        li{
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Vue中的事件修饰符：
+            1.prevent：阻止默认事件(常用);
+            2.stop：阻止事件冒泡(常用);
+            3.once：事件只触发一次(常用)；
+            4.capture：使用事件的捕获模式；
+            5.self：只有event.target是当前操作的元素时才触发事件；
+            6.passive：事件的默认行为是立即执行，无需等待事件回调执行完毕；多用平板移动端
+
+    -->
+    <!-- 准备好一个容器 -->
+    <div id="root">
+        <h2>欢迎{{name}}</h2>
+        <!-- 阻止默认事件(常用) -->
+        <a href="http://www.baidu.com" @click.prevent="showInfo">点击我跳转</a>
+        <!-- 阻止事件冒泡(常用) -->
+        <div class="button1" @click="showInfo">
+            <!-- 如下所示会产生事件冒泡，点击按钮冒泡到div上运行两次事件。 -->
+            <!-- <button @click="showInfo">我是按钮1</button>  -->
+            <!-- 阻止冒泡 -->
+            <button @click.stop="showInfo">我是按钮1</button> 
+
+            <!-- 特殊情况，既需要阻止冒泡又需要阻止跳转,修饰符可以连续写，书写前后有顺序之分 -->
+            <!-- <a href="http://www.baidu.com" @click.stop.prevent="showInfo">我是按钮1</a>  -->
+        </div>
+        <!-- 事件只触发一次(常用) -->
+        <button @click.once="showInfo">我是按钮2</button>
+        <!-- 使用事件的捕获模式 -->
+        <!-- 未阻止冒泡时，事件是从内部冒泡到外部,输出顺序为2、1，若需要从捕获阶段(先捕获、再冒泡)便执行事件即可用该修饰符,当外部事件在捕获阶段执行时即可输出1、2。 -->
+        <div class="box1" @click.capture="showMsg(1)">
+            我是1
+            <div class="box2" @click="showMsg(2)">
+                我是2
+            </div>
+        </div>
+        <!-- 只有event.target是当前操作的元素时才触发事件 -->
+        <div class="button1" @click.self="showInfo">
+            <button @click="showInfo">我是按钮3</button> 
+        </div>
+        <!-- 事件的默认行为是立即执行，无需等待事件回调执行完毕 -->
+        <!-- @scroll表示滚动条滚动事件，@wheel表示滚轮滚动事件 -->
+        <ul class="list" @wheel.passive="scroll">
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+        </ul>
+    </div> 
+    <script type="text/javascript">
+    Vue.config.productionTip=false;//阻止vue在启动时生成生产提示
+    const vm=new Vue({
+        el:'#root',
+        data(){
+           return{
+              name:'这个b'
+           }
+        },
+        methods:{
+            showInfo(e){
+                alert("看我跳转吗");
+            },
+            showMsg(msg){
+                console.log(msg);
+            },
+            scroll(){
+                // 当滚动鼠标后首先触发该事件，然后执行当前回调，执行完后才会执行默认行为，因此会发生页面滚动滑轮滚动条不动的卡顿情况。
+                for (let i = 0; i < 100000; i++) {
+                    console.log('#');
+                }
+                console.log('累坏了')
+            }
+        }
+    })
+    </script>
+</body>
+</html>

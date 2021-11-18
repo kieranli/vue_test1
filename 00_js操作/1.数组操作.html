@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数组操作</title>
+</head>
+<body>
+    <script type="text/javascript">
+        let arr=[1,5,4,2,3]
+        // 一、会改变原数组的操作
+
+        // 1、在头部添加值unshift
+        // arr.unshift(0)
+        // console.log(arr)
+
+        // 2、移除头部值shift
+        // arr.shift()
+        // console.log(arr)
+
+        // 3、在尾部添加值push
+        // arr.push(9)
+        // console.log(arr)
+
+        // 4、移除尾部值pop
+        // arr.pop(9)
+        // console.log(arr)
+
+        // 5、指定位置插入、删除、替换splice
+        // 语法：array.splice(index, howmany, item1, ....., itemX)
+        // index:指定在什么位置添加/删除项目，使用负值指定从数组末尾开始的位置。
+        // howmany:要删除的项目数。如果设置为 0，则不会删除任何项目。
+        // item1, ....., itemX:要添加到数组中的新项目。
+        // arr.splice(1,0,3,7)
+        // console.log(arr)
+
+        // 6、排序sort,a-b为升序，b-a为降序
+        // arr.sort((a,b)=>{
+        //     return a-b
+        // })
+        // console.log(arr)
+
+        // 7、反转数组reverse
+        // arr.reverse()
+        // console.log(arr)
+
+        // 二、不改变原数组的操作
+        // 1、filter() 方法创建一个新的数组，新数组中的元素是通过检查指定数组中符合条件的所有元素。不会对空数组进行检测，不会改变原始数组。
+        // 语法：array.filter(function(currentValue,index,arr), thisValue) 只有currentValue为必须值
+        // 示例：12_列表渲染/3.列表过滤
+        // let arr1=arr.filter((p)=>{
+        //     return p>2
+        // })
+        // console.log(arr1)
+
+    </script>
+</body>
+</html>

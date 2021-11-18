@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>var、let、const的区别</title>
+</head>
+<body>
+    <!-- 
+        使用var声明的变量，其作用域为该语句所在的函数内，且存在变量提升现象；
+        使用let声明的变量，其作用域为该语句所在的代码块内，不存在变量提升；
+        使用const声明的是常量，在后面出现的代码中不能再修改该常量的值，但是，并不是说 const 声明的变量其内部内容不可变，只是变量标识符不能重新分配。
+    -->
+
+    <!-- 经典示例 -->
+    <script type="text/javaScript">
+        // 以下输出10个10
+        for(var i=0;i<10;i++){
+            setTimeout(function(){
+                console.log(i);
+            },100)
+        };
+        // 以下输出0-9
+        for(let i=0;i<10;i++){
+            setTimeout(function(){
+                console.log(i);
+            },100)
+        };
+    </script>
+    <!-- 
+        分析：var首先带来了变量提升,将i提升到全局变量,所以var命令实际上只执行了一次
+        let命令不存在变量提升,所以在每次for循环执行中let都会执行一次，let块级作用域锁区,所以当前的作用域内也只有一个i，
+        所以每个setTimeout中的i值都指向了不同的值。
+        for的循环机制决定了它每次循环都是不同的块级作用域(这里与let声明块级作用域吻合) 
+        -->
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue.set的使用</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+    <!-- 
+        现有一需求，需要给学生添加响应式的性别属性
+     -->
+    <div id="root">
+        <h3>姓名：{{name}}</h3>
+        <h3>年龄：{{age}}</h3><hr>
+        <h3>学生:</h3>
+        <input type="text" v-model="student.stuSex" placeholder="输入学生性别"><button @click="addSex">点我给学生添加性别</button>
+        <h3>姓名：{{student.name}}</h3>
+        <h3>实际年龄：{{student.age.rAge}},对外年龄：{{student.age.sAge}}</h3>
+        <h3 v-if="student.sex">性别：{{student.sex}}</h3>
+        <h3>朋友:</h3>
+        <ul>
+            <li v-for="(f,index) in student.friends" :key="index">
+                {{f.name}}-{{f.age}}
+            </li>
+        </ul>
+    </div>
+    <script type="text/javascript">
+    Vue.config.productionTip=false;//阻止vue在启动时生成生产提示
+    const vm=new Vue({
+        el:'#root',
+        data(){
+           return{
+              name:'李xx',
+              age:21,
+              student:{
+                  name:'tom',
+                  age:{
+                      rAge:29,
+                      sAge:18
+                  },
+                  stuSex:'',
+                  friends:[
+                      {name:'ivan',age:24},
+                      {name:'tong',age:24}
+                ]
+              }
+              
+           }
+        },
+        methods:{
+            addSex(){
+                // Vue.set(目标，属性，值)，Vue.set可以给响应式对象添加一个属性，并且同样时响应式，但对象不能是Vue实例或Vue实例的根数据对象data/_data
+                Vue.set(this.student,'sex',this.student.stuSex)
+            }
+        }
+    })
+    </script>
+</body>
+</html>
