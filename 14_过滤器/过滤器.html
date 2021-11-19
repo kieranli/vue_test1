@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>过滤器</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <!-- 引入第三方库 -->
+    <script type="text/javascript" src="../js/dayjs.min.js"></script>
+</head>
+<body>
+    <!-- 
+        过滤器：
+            定义：对要显示的数据进行特定格式化后再显示（适用于一些简单逻辑的处理）。
+            语法：
+                1.注册过滤器：Vue.filter(name,callback) 或 new Vue{filters:{}}
+                2.使用过滤器：{{xxx | 过滤器名}} 或 v-bind：属性="xxx | 过滤器名"
+            备注:
+                1.过滤器也可以接收额外参数、多个过滤器也可以串联
+                2.并没有改变原本的数据，是产生新的对应的数据
+     -->
+    <div id="root">
+        <h2>显示格式化后的时间</h2>
+        <h3>computed处理结果：{{fmtTime}}</h3>
+        <h3>methods处理结果：{{getFmtTime()}}</h3>
+        <!-- 默认会传value值 -->
+        <h3>filters处理结果：{{time | timeFormater}}</h3>
+        <h3>filters处理结果2：{{time | timeFormater('YYYY-MM-DD')}}</h3>
+        <h3>filters处理结果3：{{time | timeFormater | myslice}}</h3>
+    </div>
+    <div id="root2">
+        <h2>{{name | myslice}}</h2>
+    </div>
+    <script type="text/javascript">
+    Vue.config.productionTip=false;//阻止vue在启动时生成生产提示
+    // 全局过滤器
+    Vue.filter('myslice',function(value){
+        // slice字符串截取
+        return value.slice(0,4)
+    })
+    const vm=new Vue({
+        el:'#root',
+        data(){
+           return{
+              time:1637306574532,
+           }
+        },
+        computed:{
+            fmtTime(){
+                // dayjs传值则取所传值计算，不传值则取当前时间
+                return dayjs(this.time).format('YYYY-MM-DD HH:mm:ss')
+            }
+        },
+        methods:{
+            getFmtTime(){
+                return dayjs(this.time).format('YYYY-MM-DD HH:mm:ss')
+            }
+        },
+        filters:{
+            // 局部过滤器
+            timeFormater(value,str='YYYY-MM-DD HH:mm:ss'){
+                return dayjs(value).format(str)
+            }
+        }
+    })
+
+    new Vue({
+        el:'#root2',
+        data(){
+            return{
+                name:'今天是个好日子'
+            }
+        }
+    })
+    </script>
+</body>
+</html>
