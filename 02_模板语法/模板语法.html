@@ -26,7 +26,7 @@
         <h1>指令语法</h1>
         <a v-bind:href="baidu.url" v-bind:x="baidu.hello">百度1</a>
         <!-- toUpperCase()转换大写字母 -->
-        <a :href="baidu.url.toUpperCase()" :x="baidu.hello">百度2</a> 
+        <a :href="baidu.url.toUpperCase()" :x="baidu.hi">百度2</a> 
     </div>
     <script type="text/javascript">
         Vue.config.productionTip=false; //阻止vue在启动时生成生产提示
@@ -36,10 +36,26 @@
                 name:'jack',
                 baidu:{
                     url:'http://baidu.com',
-                    hello:'你好啊'
+                    hello:'你好啊',
+                    hi:'不好'
                 }
             }
         })
+        // 打印自定义标签属性的值，querySelector返回满足条件的第一个元素或null，querySelector返回满足条件的所有元素或空数组(nodelist,类似数组的实例对象)
+        //console.log(document.querySelector('a').getAttribute('x'));
+        var nodelist=document.querySelectorAll('a');
+        //for循环数组
+        for(let i=0;i<nodelist.length;i++){
+            console.log(nodelist[i].getAttribute('x'));
+        }
+        //for of循环数组,e表示数组中的每一项,支持break,continue,return等
+        for (let e of nodelist) {
+            console.log(e.getAttribute('x'));
+        }
+        //forEach循环数组,e表示数组中的每一项,没有return返回值
+        nodelist.forEach(function(e,i){
+            console.log(e.getAttribute('x'));
+        });
     </script>
 </body>
 </html>
