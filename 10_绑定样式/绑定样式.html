@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,42 +8,49 @@
     <title>绑定样式</title>
     <script type="text/javascript" src="../js/vue.js"></script>
     <style>
-        .basic{
+        .basic {
             color: white;
             height: 100px;
             width: 300px;
             border: 2px solid #333333;
             /* background-color: #999999; */
         }
-        .happy{
+
+        .happy {
             background-color: hotpink;
             border-color: indianred;
         }
-        .sad{
+
+        .sad {
             background-color: green;
             border-color: greenyellow;
         }
-        .normal{
+
+        .normal {
             background-color: palegoldenrod;
             border-color: yellowgreen;
         }
-        .text1{
+
+        .text1 {
             font-size: 24px;
             color: red;
         }
-        .text2{
+
+        .text2 {
             border-radius: 5px;
         }
-        .text3{
+
+        .text3 {
             border-color: yellow;
         }
     </style>
 </head>
+
 <body>
     <!-- 
         绑定样式：
             1.class样式
-                写法：class='xxx' xxx可以是字符串、对象、数组。
+                写法：:class='xxx' xxx可以是字符串、对象、数组。
                     字符串写法适用于：类名不确定，要动态获取。
                     对象写法适用于：要绑定多个样式，个数不确定，名字也不确定。
                     数组写法使用于：要绑定多个样式，个数确定，名字也确定，但不确定用不用。
@@ -57,57 +65,83 @@
         <!-- <div class="basic" id="demo" @click="changeMood">{{name}}</div> -->
 
         <!-- 用v-bind绑定class样式--字符串写法，适用于样式的类名不确定，需要动态指定 -->
-        <div class="basic" :class="mood" @click="changeMood">{{name}}</div><br/><br/>
+        <div class="basic" :class="mood" @click="changeMood()">{{name}}</div><br /><br />
 
         <!-- 用v-bind绑定class样式--数组写法，适用于样式的类名不确定，需要动态指定 -->
-        <!-- vm.classArr.shift()移除第一个数组元素,vm.classArr.push('text1')添加对应元素 -->
+        <!-- 调试时用vm.classArr.shift()移除第一个数组元素,vm.classArr.push('text1')添加对应元素 -->
+        <div>
+            <button @click="changeArr('text1')">字体</button>
+            <button @click="changeArr('text2')">圆角</button>
+            <button @click="changeArr('text3')">边框</button>
+        </div>
+        <div class="basic" :class="classArr">{{name}}</div><br /><br />
 
-        <div class="basic" :class="classArr">{{name}}</div><br/><br/>
-
+        <div>
+            <button @click="changeObjText('text1')">字体</button>
+            <button @click="changeObjText('text2')">圆角</button>
+        </div>
         <!-- 用v-bind绑定class样式--对象写法，适用于样式的类名确定，个数确定，需要动态决定用不用 -->
-        <div class="basic" :class="classObj">{{name}}</div><br/><br/>
+        <div class="basic" :class="classObj">{{name}}</div><br /><br />
 
         <!-- 绑定style样式，对象写法 -->
-        <div class="basic" :style="styleObj">{{name}}</div><br/><br/>
+        <div class="basic" :style="styleObj">{{name}}</div><br /><br />
         <!-- 或 -->
-        <div class="basic" :style=[styleObj,styleObj1]>{{name}}</div><br/><br/>
+        <div class="basic" :style=[styleObj,styleObj1]>{{name}}</div><br /><br />
 
     </div>
     <script type="text/javascript">
-    Vue.config.productionTip=false;//阻止vue在启动时生成生产提示
-    const vm=new Vue({ 
-        el:'#root',
-        data(){
-           return{
-              name:'高手',
-              mood:'sad',
-              classArr:['text1','text2','text3'],
-              classObj:{
-                  text1:false,
-                  text2:false
-              },
-              styleObj:{
-                  fontSize:'40px',
-                  color:'red',
-                  backgroundColor:'orange'
-              },
-              styleObj1:{
-                borderColor:'blue'
-              }
-           }
-        },
-        methods:{
-            changeMood(){
-                // 原生写法
-                // document.getElementById('demo').className='basic happy'
+        Vue.config.productionTip = false; //阻止vue在启动时生成生产提示
+        const vm = new Vue({
+            el: '#root',
+            data() {
+                return {
+                    name: '高手',
+                    mood: 'sad',
+                    classArr: ['text1', 'text2', 'text3'],
+                    classObj: {
+                        text1: false,
+                        text2: false
+                    },
+                    styleObj: {
+                        fontSize: '40px',
+                        color: 'red',
+                        backgroundColor: 'orange'
+                    },
+                    styleObj1: {
+                        borderColor: 'blue'
+                    },
+                    num: 0
+                }
+            },
+            methods: {
+                changeMood() {
+                    // 原生写法
+                    // document.getElementById('demo').className='basic happy'
 
-                // this.mood='happy'
-                const arr=['happy','sad','normal']
-                const index=Math.floor(Math.random()*3) //取0，1，2之间的随机数，floor为取整数部分
-                this.mood=arr[index]
+                    // this.mood='happy'
+                    const arr = ['happy', 'sad', 'normal']
+                    //const index=Math.floor(Math.random()*3) //取0，1，2之间的随机数，floor为取整数部分
+                    this.num++;
+                    if (this.num == 3) {
+                        this.num = 0
+                    }
+                    this.mood = arr[this.num]
+                },
+                changeArr(value) {
+                    let index = this.classArr.indexOf(value); //查找当前样式在数组中的位置,存在则返回下标不存在则返回-1
+                    //存在则删掉，不存在则push进去
+                    if (index > -1) {
+                        this.classArr.splice(index, 1)
+                    } else {
+                        this.classArr.push(value)
+                    }
+                },
+                changeObjText(value) {
+                    return this.classObj.value ? flase:true
+                }
             }
-        }
-    })
+        })
     </script>
 </body>
+
 </html>
