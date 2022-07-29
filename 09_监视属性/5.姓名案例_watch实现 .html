@@ -9,13 +9,16 @@
 </head>
 <body>
     <!-- 
-        computed与watch质检的区别:
+        computed与watch之间的区别:
             1.computed能完成的功能,watch都能实现.
             2.watch能完成的功能,computed不一定能实现,例如;watch可以进行异步操作(如setTimeout)
         两个重要的小原则:
             1.被Vue所管理的函数,最好写成普通函数,这样this的指向才是vm或组件实例对象
+            ************  重点  ************
             2.所有不被Vue所管理的函数(定时器的回调函数、ajax的回调函数、Promise的回调函数等),最好写成箭头函数,
             这样this的指向才是vm或组件实例对象.
+            this的指向始终指向最近的调用它的对象，如setTimeout为windows管理的函数，调用时的this则指向windows，
+            而当将setTimeout写成箭头函数后，由于箭头函数没有this，this便指向最近的调用的对象
      -->
     <!-- 准备好一个容器 -->
     <div id="root">
@@ -39,11 +42,13 @@
             firstName(newValue){
                 //这里需要写成箭头函数,因为定时器是浏览器任务,js执行调用,箭头函数没有this,没有this则会往外找指向最近的this,若写成普通函数this则指向windows
                 setTimeout(() => {
+                    console.log('监视属性的firstName被调用了');
                     return this.fullName=newValue+'-'+this.lastName
                 }, 1000);
             },
             lastName(newValue){
                 setTimeout(() => {
+                    console.log('监视属性的lastName被调用了');
                     return this.fullName=this.firstName+'-'+newValue
                 }, 1000);
             },

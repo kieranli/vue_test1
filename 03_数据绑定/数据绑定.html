@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,6 +8,7 @@
     <title>数据绑定</title>
     <script type="text/javascript" src="../js/vue.js"></script>
 </head>
+
 <body>
     <!-- 
         Vue中有两种数据绑定方式：
@@ -18,7 +20,7 @@
      -->
     <!-- 准备一个容器 -->
     <div id="root">
-        <h1>{{ceshi}}</h1>
+        <h4>{{ceshi}}</h4>
         <!-- 普通写法 -->
         <!-- 单项数据绑定：<input type="text" v-bind:value="ceshi"></br>
         双向数据绑定：<input type="text" v-model:value="ceshi"></br> -->
@@ -31,13 +33,14 @@
         <!-- <h2 v-model:x="ceshi"></h2> -->
     </div>
     <script type="text/javascript">
-        Vue.config.productionTip=false;
+        Vue.config.productionTip = false;
         new Vue({
-            el:'#root',
-            data:{
-                ceshi:'测试'
+            el: '#root',
+            data: {
+                ceshi: '测试'
             }
         })
     </script>
 </body>
+
 </html>

@@ -10,7 +10,7 @@
 <body>
     <!--
         深度监视：
-            (1).Vue中的watch默认补监测对象内部值的变化(一层)。
+            (1).Vue中的watch默认不监测对象内部值的变化(一层)。
             (2).配置deep:true可以监测对象内部值的变化(多层)。
         备注：
             (1).Vue自身可以监测对象内部值的改变，但Vue提供的watch默认不可以。
@@ -18,9 +18,9 @@
     -->
     <!-- 准备一个容器 -->
     <div id="root">
-        <h2>a的值为{{numbers.a}}</h2>
+        <h4>a的值为{{numbers.a}}</h4>
         <button @click="numbers.a++">点我a++</button>
-        <h2>b的值为{{numbers.b}}</h2>
+        <h4>b的值为{{numbers.b}}</h4>
         <button @click="numbers.b++">点我b++</button>
     </div>
     <script type="text/javascript">

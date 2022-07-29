@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>5.flex布局</title>
+</head>
+<style>
+    .box {
+        height: 500px;
+        width: 100%;
+        display: -webkit-box;
+    }
+
+    .flex1 {
+        background: red;
+        width: 100px;
+
+    }
+
+    .flex2 {
+        background: yellow;
+        -webkit-box-flex: 1;
+    }
+
+    .flex3 {
+        background: blue;
+        -webkit-box-flex: 2;
+    }
+
+    .flex4 {
+        background: grey;
+        width: 200px;
+    }
+
+</style>
+
+<body>
+    <!-- 
+        flex布局中：所有Webkit内核的浏览器，必须加上-webkit前綴
+        八大webkit内核浏览器：
+        1.Google Chrome 谷歌浏览器
+        2.Safari浏览器
+        3.搜狗高速浏览器
+        4.傲游浏览器3
+        5.QQ浏览器
+        6.360极速浏览器
+        7.世界之窗浏览器(极速版)
+        8.阿里云浏览器
+     -->
+    <div class="box">
+        <div class="flex1"></div>
+        <div class="flex2"></div>
+        <div class="flex3"></div>
+        <div class="flex4"></div>
+    </div>
+</body>
+
+</html>

@@ -14,7 +14,8 @@
         3.get函数什么时候执行？
             (1).初次读取时会执行一次。
             (2).当依赖的数据发生改变时会被再次调用。
-        4.优势：与methods相比，内部有缓存机制（复用），效率更高，调试方便。
+        4.优势：与methods相比，内部有缓存机制（复用），效率更高，调试方便。计算属性调用时不要()，methods需要加()
+                当计算属性没有依赖data中的数据时，第一次使用计算属性时，会把第一次的结果进行缓存，后面再次使用计算属性，都会去第一次的结果中进行查找
         5.备注：
             1.计算属性最终会出现在vm上，直接读取即可使用。
             2.如果计算属性要被修改，那必须写set函数去相应修改，且set要引起计算时依赖的数据发生改变。
@@ -46,9 +47,10 @@
                 },
                 //set什么时候调用？当fullName被修改时
                 set(value){
-                    const arr=value.split('-') //split根据当前分割符分割
-                    this.firstName=arr[0]
-                    this.lastName=arr[1]
+                    console.log('set被调用了');    
+                    const arr=value.split('-'); //split根据当前分割符分割
+                    this.firstName=arr[0];
+                    this.lastName=arr[1];
                 }
             }
         }
