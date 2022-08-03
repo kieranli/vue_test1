@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第三方库dayjs</title>
+    <!-- 引入第三方库 -->
+    <script type="text/javascript" src="../js/dayjs.min.js"></script>
+</head>
+<body>
+    <script>
+    // dayjs().add(num,day/...)/dayjs().subtract(num,day/...)在当前时间上去加减
+    // dayjs(value).add(num,day/...)/dayjs(value).subtract(num,day/...)在指定时间（value）上加减
+    // dayjs().startOf(year/month)/dayjs().endOf(year/month)获取某年某月的第一天/最后一天
+    // dayjs().day()返回0(星期日)到6(星期六)的数字
+    // 所有可用单位及对应缩写:week(w)/day(d)/month(M)/year(y)/hour(h)/minute(m)/second(s)/millisecond(ms)
+    // 文章参考：https://blog.csdn.net/halo1416/article/details/124298324
+    console.log(dayjs().add(1,'day').format('YYYY-MM-DD'))
+    console.log(dayjs().subtract(1,'day').format('YYYY-MM-DD'))
+    console.log(dayjs('2000-06-25').add(1,'day').format('YYYY-MM-DD'))
+    console.log(dayjs('2000-06-25').subtract(1,'day').format('YYYY-MM-DD'))
+    console.log(dayjs('2000').startOf(1,'year').format('YYYY-MM-DD'))
+    console.log(dayjs('2000-06').endOf(1,'month').format('YYYY-MM-DD'))
+    console.log(dayjs('2000-06-25').day())
+    </script>
+</body>
+</html>

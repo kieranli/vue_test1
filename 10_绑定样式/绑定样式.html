@@ -135,9 +135,20 @@
                     } else {
                         this.classArr.push(value)
                     }
-                },
+                }
+                ,
                 changeObjText(value) {
-                    return this.classObj.value ? flase:true
+                    console.log(value)
+                    console.log(this.classObj.value) 
+                    //这里必须要遍历对象寻找对应的属性名，因为函数的传参是按值传递
+                    for(var i in this.classObj){
+                        if(i==value){
+                            console.log(this.classObj[i])
+                            return this.classObj[i] = !this.classObj[i]
+                        }
+                    }
+                    // 错误示范，具体解释查看00_js操作>6.引用对象是如何传参的
+                    // return this.classObj.value = !this.classObj.value
                 }
             }
         })

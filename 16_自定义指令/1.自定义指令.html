@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1.自定义指令</title>
+    <script type="text/javaScript" src="../js/vue.js"></script>
+</head>
+
+<body>
+    <!-- 
+        1、定义一个v-big指令，类似v-text，但会将绑定的数值放大10倍。
+        2、定义一个v-fbind指定，类似v-bind，但会让其绑定的input元素默认获取焦点。
+     -->
+    <!-- 
+        自定义指令总结：
+        一、定义语法：
+            1、局部指令：new Vue({directives:{指令名:配置对象}})或new Vue({directives:{指令名:回调函数}})
+            2、全局指令：Vue.directive(指令名,配置对象)或Vue.directive(指令名,回调函数)
+        二、配置对象中常用的3个回调：
+        1、bind：指令与元素成功绑定时调用
+        2、inserted：指令所在元素被插入页面时调用
+        3、update：指令所在模板结构被重新解析时调用
+        三、备注：
+            1、指令定义时不加v-，但使用时要用v-
+            2、指令名如果是多个单词，要使用kebab-case命名方式，不要用camelCase命名。
+      -->
+    <div id="root">
+        <h4>当前的n值是<span v-text="n"></span></h4>
+        <h4>放大后的n值是<span v-big="n"></span></h4>
+        <!-- 自定义指令命名时，多个单词需用-关联 -->
+        <!-- <h4>放大后的n值是<span v-big-number="n"></span></h4> -->
+        <button @click="n++">点我n++</button>
+        <hr />
+        <input type="text" v-bind:value="n">
+        <hr />
+        <!-- autofocus为自动获取焦点，这个方法可能会浏览器不兼容 -->
+        <!-- <input type="text" v-fbind="n" autofocus> -->
+        <input type="text" v-fbind="n">
+    </div>
+
+
+    <!-- 未注册全局指令前是无法使用的，会报错 -->
+    <!-- <div id="root2">
+        <h4>我也要放大<span v-big="m"></span></h4>
+    </div> -->
+</body>
+<script type='text/javascript'>
+    Vue.config.productionTip = false; //阻止vue在启动时生成生产提示
+
+    //注册全局自定义指令，第一个参数为
+    // Vue.directive('big', function (element, binding) {
+    //     element.innerText = binding.value * 10
+    // })
+
+    new Vue({
+        el: '#root',
+        data() {
+            return {
+                n: 1
+            }
+        },
+        //写在directives里的都是局部指令
+        directives: {
+            // 当自定义指令命名为多个单词时，需用引号包裹
+            // 'big-number'(element,binding)
+
+            // 简写自定义指令被调用的情况有两种：
+            // ①当dom与指令成功绑定时，即非简写的bind
+            // ②当指令绑定的dom所在的模板被重新解析时，即非简写的update
+            big(element, binding) {
+                // console.log(element,binding)//element为指定绑定的真实dom,binding为一个对象
+                element.innerText = binding.value * 10
+                console.log(this) //指向window
+            },
+
+            // fbind(element,binding){
+            //     element.value=binding.value
+            //     // element.focus()//一上来不奏效，点按钮后才奏效  分析：当一开始加载时，input即与指定绑定，此时input元素还没到页面上就调用focus()方法
+            // }
+            fbind: {
+                //当指令与元素成功绑定时调用
+                bind(element, binding) {
+                    element.value = binding.value
+                    console.log(this) //指向window
+                },
+                //当指令所在元素被插入页面时调用
+                inserted(element, binding) {
+                    element.focus()
+                    console.log(this) //指向window
+
+                },
+                //当指令绑定元素所在模板被重新解析时调用
+                update(element, binding) {
+                    // 这里不写会导致重新调用时功能丢失，测试点击按钮n++时，值不变且失去焦点
+                    element.value = binding.value
+                    console.log(this) //指向window
+
+                    // element.focus() 加上这句也可以但是功能逻辑不对
+                }
+            }
+        }
+    })
+
+    //一个页面不能有两个vm,此处仅测试
+    // new Vue({
+    //     el: '#root2',
+    //     data() {
+    //         return {
+    //             m: 11
+    //         }
+    //     }
+    // })
+</script>
+
+</html>

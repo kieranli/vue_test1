@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>5.v-pre指令</title>
+    <script type="text/javaScript" src="../js/vue.js"></script>
+</head>
+<!-- 
+    v-pre:
+    1、v-pre指令可以让vue跳过所在其节点的编译过程,vue不再去解析
+    2、可利用它跳过哪些没有指令语法也没有插值语法的语句，可以加快编译速度
+ -->
+<body>
+    <div id="root">
+        <h4 v-pre>vue的基础学习</h4>
+        <h4>当前的n值是{{n}}</h4>
+        <button @click="n++">点我n++</button>
+    </div>
+</body>
+<script type='text/javascript'>
+    Vue.config.productionTip = false; //阻止vue在启动时生成生产提示
+    new Vue({
+        el: '#root',
+        data() {
+            return {
+                n:1
+            }
+        }
+    })
+</script>
+
+</html>

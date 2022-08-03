@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>对象操作方法</title>
+</head>
+
+<body>
+    <script>
+        // Object.keys，Object.keys(obj)
+        // 参数：要返回的对象
+        // 返回值：所有可枚举属性的字符串
+        var data = {
+            a: 7,
+            b: 8,
+            c: 9
+        };
+        console.log(Object.keys(data).toString()); //返回的是a,b,c的数组，这里方便查看我选择转为字符串
+        Object.keys(data).map((key,index,item) => {
+            console.log(key,data[key])//a 7 b 8 7 9
+        })
+    </script>
+</body>
+
+</html>

@@ -19,16 +19,17 @@
         console.log(obs)
 
         function Observer(obj) {
-            // 汇总对象里所有属性行程一个数组。
-            const keys=Object.keys(obj)
+            // 汇总对象里所有属性形成一个数组。
+            const keys=Object.keys(obj) //name,age
             // 遍历
             keys.forEach((k) => {
-                Object.defineProperty(this,k,{
+                Object.defineProperty(this,k,{//当前this指向Observer
                     get(){
                         return obj[k]
                     },
                     set(val){
                         obj[k]=val
+                        console.log('set被调用了')
                     }
                 })
             });

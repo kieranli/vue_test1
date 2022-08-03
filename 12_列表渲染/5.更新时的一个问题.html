@@ -10,7 +10,7 @@
 <body>
     <!-- 准备好一个容器 -->
     <div id="root">
-        <button @click="changeMei">马冬梅变马老师</button>
+        <button @click.once="changeMei">马冬梅变马老师</button>
         <h2>人员列表</h2>
         <ul>
             <!-- v-for="(a,b) in/of xxxx"  -->
@@ -41,7 +41,7 @@
 
                 // this.persons[0]={id:'001',name:'马老师',age:50,sex:'男'} 不奏效
 
-                // 原因，Vue对数组的监测原理是对数组的操作方法进行包裹，所以需要使用这几个方法才可以被Vue监测到，也可以用Vue.set
+                // 原因，Vue对数组的监测原理是对数组的操作方法进行包裹，所以需要使用这几个操作数组的方法才可以被Vue监测到，也可以用Vue.set
                 this.persons.splice(0,1,{id:'001',name:'马老师',age:50,sex:'男'})
 
             }

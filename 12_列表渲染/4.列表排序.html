@@ -14,7 +14,7 @@
         <button @click="sortType = 2">点击升序</button>
         <button @click="sortType = 1">点击降序</button>
         <button @click="sortType = 0">原顺序</button>
-        <h2>人员列表</h2>
+        <h4>人员列表</h4>
         <ul>
             <!-- v-for="(a,b) in/of xxxx"  -->
             <li v-for="(p,index) of filPersons" :key="p.id">
@@ -40,9 +40,11 @@
         },
         computed:{
             filPersons(){
+                //模糊查询出来的数组赋给arr
                 const arr=this.persons.filter((p)=>{
                     return p.name.indexOf(this.keyWord) !== -1
                 })
+                //判断升降序规则
                 if(this.sortType){
                     // 此时p1,p2为对象
                     arr.sort((p1,p2)=>{

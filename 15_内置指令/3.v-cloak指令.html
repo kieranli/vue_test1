@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3.v-cloak指令</title>
+    <!-- <script type="text/javaScript" src="../js/vue.js"></script> -->
+    <script type="text/javaScript" src="http://localhost:8181/js/vue.js"></script>
+    <!-- 
+        v-cloak:
+        1、本质是没有值的，只有属性，当Vue实例创建容器并接管实例之后会删掉v-cloak
+        2、结合css控制display:none;可以防止用户网速过慢时出现{{name}}这样的未编译内容
+     -->
+     <style>
+        /* 属性选择器，选中所有标签里含有v-volak属性的标签 */
+        [v-volak]{
+            display:none;
+        }
+     </style>
+</head>
+
+<body>
+    <div id="root">
+        <h4 v-cloak>{{name}}</h4>
+    </div>
+    <!-- 在引入的外部JS延迟获取的时候可以先将未编译的内容展示出来 -->
+    <!-- <script type="text/javaScript" src="../js/vue.js"></script> -->
+</body>
+<script type='text/javascript'>
+    Vue.config.productionTip = false; //阻止vue在启动时生成生产提示
+    new Vue({
+        el: '#root',
+        data() {
+            return {
+                name: "指令语法v-clock指令"
+            }
+        }
+    })
+</script>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2.原生js自动获取焦点</title>
+</head>
+<body>
+    <button id="btn">点我创建输入框</button>
+    <script>
+        const btn=document.getElementById("btn");
+        btn.onclick=()=>{
+            const input=document.createElement('input')
+            input.style.backgroundColor='orange'
+            input.value=99
+            document.body.appendChild(input)//在body下创建input
+            input.focus()//自动获取焦点
+            input.parentElement.style.backgroundColor='skyblue'
+        }
+    </script>
+</body>
+</html>

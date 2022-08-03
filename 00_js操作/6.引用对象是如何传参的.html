@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>引用对象是如何传参的</title>
+</head>
+
+<body>
+    <script>
+        //示例，栈内存存放着基本类型的变量，而<引用类型>则是在栈内存中的一个<指针>，指向了堆内存
+        // ECMAScript中所有函数的参数都是按<值>传递的。也就是说，函数的传参，就和基本类型变量的复制一样，而引用类型值的传递，则如同引用类型变量的复制一样。
+        // 这里可能会使很多人感到困惑，因为访问变量有按<值>和按<引用>两种方式，而参数只能按<值>传递。
+        function setObj(p) {
+            p.name = "AA";
+            p = {};
+            p.name = "BB"
+        }
+        var p = {
+            name: 'CC'
+        }
+        setObj(p);
+        console.log(p);
+        //打印结果为name:'AA'
+        // 分析如下：首先有个在栈内存中的p他指向了堆内存中的object{name:"CC"}
+        // 然后执行setObj()函数，p把自己的指向告诉了形参p,形参p也指向了object{name:"CC"}，接着直接修改成了object{name:"AA"}
+        // 接着p={}这里，形参p要创建一个对象，于是他指向了堆内存中的一个object{}
+        // 形参p修改这个他刚创建的对象为object{name:"BB"}
+        // 函数结束，形参p被释放
+        // 打印出p的值为{name: "AA"}
+        //参考CSDN：
+        // https://blog.csdn.net/weixin_43527871/article/details/108578449
+        // https://blog.csdn.net/LAWTED/article/details/115432980
+    </script>
+</body>
+
+</html>
