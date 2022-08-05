@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>9.闭包</title>
+</head>
+
+<body>
+    <!-- 
+        闭包的概念：
+        闭包是一个存在内部函数的引用关系，该引用指向的时外部函数的局部变量对象
+        闭包的作用：
+        延长外部函数变量对象的生命周期
+        使用闭包能够间接的从函数外部访问函数内部的私有变量
+     -->
+    <script>
+        var age = 10;
+
+        function foo() {
+            console.log('age='+age); //-----------------1
+            debugger
+            var name = "hunt_bo";
+            return function () {
+                console.log('name1='+name);           
+            }
+        }
+        console.log('name2='+name); //---------------2
+        debugger
+        var bar = foo();
+        bar();
+
+        
+    </script>
+</body>
+
+</html>
