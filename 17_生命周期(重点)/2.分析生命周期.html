@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2.分析生命周期</title>
+    <script type="text/javaScript" src="../js/vue.js"></script>
+</head>
+
+<body>
+    <div id="root">
+        <h4>当前n值是{{n}}</h4>
+        <button @click="add">点我n++</button>
+        <button @click="bye">销毁vm</button>
+        <h4 v-text="n"></h4>
+    </div>
+    <script type='text/javascript'>
+        Vue.config.productionTip = false; //阻止vue在启动时生成生产提示
+        new Vue({
+            el: '#root',
+            // template: `<div id="root">
+            //                 <h4>当前n值是{{n}}</h4>
+            //                 <button @click="add">点我n++</button>
+            //             </div>`,
+            data() {
+                return {
+                    n: 1
+                }
+            },
+            methods: {
+                add() {
+                    console.log('add')
+                    this.n++
+                },
+                bye(){
+                    console.log('bye')
+                    this.$destroy()
+                }
+            },
+            watch:{
+                n:{
+                    handler(oldValue,newValue){
+                        console.log('n从'+oldValue+'变成了'+newValue)
+                    }
+                }
+            },
+
+            //挂载流程
+
+            //数据代理、数据监测的初始化创建之前，此时无法通过vm访问到data中的数据、methods中的方法。
+            beforeCreate() {
+                console.log('beforeCreate')
+                console.log(this) //输出中找不到_data和_add
+                debugger
+            },
+            //可以通过vm访问到data中的数据、methods中的方法配置
+            created() {
+                console.log('created')
+                debugger
+            },
+            //1、页面呈现的是未经Vue编译的DOM结构；2、此处的DOM操作，最终都不奏效
+            beforeMount() {
+                console.log('beforeMount')
+                //querySelector返回匹配指定选择器的第一个元素,如果需要返回所有的元素，请使用 querySelectorAll() 方法替代,
+                // 例：获取文档中所有 class="example" 的 <p> 元素
+                // document.querySelectorAll("p.example")
+                document.querySelector('h4').innerText = '嘻嘻'
+                debugger //取消断点调试后，上一句对DOM操作就失效了
+            },
+            //1、页面呈现的是经过Vue编译后的DOM；
+            //2、对DOM的操作均有效（尽可能避免），至此初始化过程结束，一般在此进行：
+            // 开启定时器、发送网络请求、订阅消息、绑定自定义事件等初始化操作
+            mounted() {
+                console.log('amonut')
+                // document.querySelector('h4').innerHTML = '哈哈'
+                debugger
+            },
+
+            //更新流程
+
+            //此时数据是新的，但页面是旧的
+            beforeUpdate(){
+                console.log('beforeUpdate')
+                console.log(this.n)
+                debugger
+            },
+
+            //更新时：根据新数据，生成新的虚拟DOM，随后与旧的虚拟 DOM进行比较，最终完成页面更新，即：完成了Model->View的更新
+
+            //更新完成后，数据和页面保持同步
+            updated(){
+                console.log('updated')
+                console.log(this.n)
+                debugger
+            },
+            //vm中所有的：data、methods、指令等等，都处于可用状态，马上要执行销毁过程，一般在此阶段：关闭定时器、取消订阅消息、解绑自定义事件等收尾操作
+            //此时可以查看数据、可以修改数据，但是所有修改都不会触发更新了
+            beforeDestroy(){
+                console.log('beforeDestroy')
+                this.add()
+                debugger
+            },
+            destroyed(){
+                console.log('destroy')
+                console.log(this.n)
+            }
+        })
+    </script>
+</body>
+
+</html>
