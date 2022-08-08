@@ -73,7 +73,19 @@
         //     return p>2
         // })
         // console.log(arr1)
-
+        // 2、map和foreach的区别
+        // ①forEach()方法不会返回执行结果，二十undefined
+        // ②map()方法会得到一个新的数组
+        // ③同样的一组数组，map()的执行速度优于forEach()
+        // ④forEach适用于不打算改变数据，例如：
+        // arr.forEach((val)=>{
+        //     console.log(val) //1,5,4,2,3,NaN,2,NaN,5
+        // })
+        // map适用于需要改变数值时，且能返回一个新的数组,例如：
+        let arr2=arr.map((val)=>{
+            return val=val*2
+        }).filter(val=>val>5)//简写原式为.filter((val)=>{return val>5})
+        console.log(arr2)
     </script>
 </body>
 </html>
