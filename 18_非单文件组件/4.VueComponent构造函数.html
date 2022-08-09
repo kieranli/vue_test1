@@ -8,6 +8,90 @@
     <script type="text/javaScript" src="../js/vue.js"></script>
 </head>
 <body>
-    
+     <!-- 
+        关于VueComponent:
+            1、school组件本质是一个名为VueComponent的构造函数，且不是程序员定义的，是Vue.extend生成的
+            2、我们只需要写<school/>或<school></school>。Vue解析时会帮我们创建school组件的实例对象。
+                即Vue帮我们执行：new VueComponent(options)
+            3、特别注意：每次调用Vue.extend,返回的都是一个全新的VueComponent
+            4、关于this指向：
+                (1)、组件配置中：
+                    data函数、methods中的函数、watch中的函数、computed中的函数 它们的this指向均是【VueComponent实例对象】
+                (2)、new Vue(options)配置中：
+                    data函数、methods中的函数、watch中的函数、computed中的函数 它们的this指向均是【Vue实例对象】
+            5、VueComponent的实例对象，以后简称VC，也可称之为组件的实例对象
+     -->
+    <div id="root">
+
+    </div>
+    <script type='text/javascript'>
+        Vue.config.productionTip = false; //阻止vue在启动时生成生产提示
+        //定义school组件
+        const school = Vue.extend({
+            name:"xuexiao",
+            template: `
+            <div>
+                <h4>学校名称：{{schoolName}}</h4>
+                <h4>学校地址：{{address}}</h4>
+            </div>
+            `,
+            data(){
+                return{
+                    schoolName:'野鸡大学',
+                    address:'武汉市江岸区'
+                }
+            }
+        })
+        const test=Vue.extend({
+            template:`
+            <div>
+                <button @click="f1">点我测试</button>
+            </div>
+            `,
+            data(){
+                return{
+                    msg:'测试@'
+                }
+            },
+            methods:{
+                f1(){
+                    alert(this.msg)
+                }
+            }
+        })
+        //定义hello组件
+        const hello=Vue.extend({
+            template:`
+            <div>
+                <h4>看看消息{{msg}}</h4>
+                <test></test>
+            </div>
+            `,
+            data(){
+                return{
+                    msg:'你好啊！'
+                }
+            },
+            components:{
+                test
+            }
+        })
+        
+        console.log('@',school)
+        console.log('#',hello)
+        console.log(hello===school)
+        const vm=new Vue({
+            el: '#root',
+            template:`
+            <div>
+                <school></school>
+                <hello></hello>
+            </div>
+            `,
+            components:{
+                school,hello
+            }
+        })
+    </script>
 </body>
 </html>
