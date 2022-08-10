@@ -5,8 +5,64 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>5.一个重要的内置关系</title>
+    <script type="text/javaScript" src="../js/vue.js"></script>
 </head>
 <body>
-    
+    <!-- 
+        1、一个重要的内置关系：VueComponent.prototype.__proto===Vue.prototype  可见关系图（原型对象）
+
+            Vue构造函数(必定含有prototype)-------指向-----Vue的原型对象(Vue.prototype)---指向---Object的原型对象(Vue.prototype.__proto__)
+
+            Vue实例对象(VM，必定含有__proto__)---指向-----同上
+
+            VueComponent构造函数(prototype)-----指向-----VueComponent的原型对象(VueComponent.prototype)---指向---Vue的原型对象(在这里原本应该指向Object的原型对象，Vue强行增添了这一逻辑)
+
+            组件实例对象(必定含有__proto__)-----指向-----同上
+        2、为什么要有这个关系：
+            让组件实例对象(小型VM，在本篇学习记录中称作vc)可以访问到Vue原型上的属性、方法。
+     -->
+    <div id="root">
+
+    </div>
+    <script type='text/javascript'>
+        Vue.config.productionTip = false; //阻止vue在启动时生成生产提示
+        //检验逻辑，给Vue的原型对象(Vue.prototype)添加属性
+        Vue.prototype.x=99
+        //定义school组件
+        const school = Vue.extend({
+            name:"xuexiao",
+            template: `
+            <div>
+                <h4>学校名称：{{schoolName}}</h4>
+                <h4>学校地址：{{address}}</h4>
+                <button @click="showX">点我打印实例对象</button>
+            </div>
+            `,
+            data(){
+                return{
+                    schoolName:'野鸡大学',
+                    address:'武汉市江岸区'
+                }
+            },
+            methods:{
+                showX(){
+                    console.log(this)
+                    console.log(this.x)//顺着原型链一直找，直到在Vue的原型对象(Vue.prototype)上找到x
+                }
+            }
+        })
+        const vm=new Vue({
+            el: '#root',
+            template:`
+            <div>
+                // new 一个组件实例对象
+                <school></school>
+            </div>
+            `,
+            components:{
+                school
+            }
+        })
+    </script>
 </body>
 </html>

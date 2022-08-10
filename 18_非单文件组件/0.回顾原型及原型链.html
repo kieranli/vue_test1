@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>0.回顾原型及原型链</title>
+</head>
+
+<body>
+    <!-- 
+        原型：
+            构造函数有一个prototype属性指向原型对象
+            原型对象有一个constructor属性指向构造函数
+            实例有一个__proto__属性指向构造函数的prototype属性
+            所以呢，实例的__proto__属性就指向原型对象
+            实例.__proto__  ===  构造函数.prototype,都指向原型对象
+        原型链：
+            实例对象的__proro__属性指向原型对象
+            原型对象也有__proto__属性，指向自己的原型对象
+            原型对象的原型对象也有__proto__属性，指向自己缔造者的原型对象
+            一直到...的原型对象的....的原型对象指向Object
+            Object的__proto__属性等于null（原型链的尽头）
+            总结：
+                从实例对象的__proto__一直指向下一个最后到Object的__proto__指向null
+                这样的链式结构称之为原型链
+                实例对象的隐式原型属性（__proto__）永远指向自己缔造者的原型对象
+     -->
+    <script>
+        //定义一个构造函数
+        function Demo() {
+            this.a = 1,
+                this.b = 2
+        }
+        const d = new Demo()
+        console.log(Demo.prototype) //显式原型属性，构造函数通过prototype指向原型对象，原型对象通过constructor指向构造函数
+        console.log(d.__proto__) //隐式原型属性，实例通过__proto__指向原型对象
+        console.log(Demo.prototype === d.__proto__) //true
+
+        Demo.prototype.x = 99 //程序员通过显式原型属性操作原型对象，追加一个x值
+        console.log(d.__proto__.x) //99,程序执行时通过__proto__指向原型对象获取原型对象里的值
+        console.log(d.x) //99，简写，当实例中不存在x属性时，程序按照隐式原型链查找
+    </script>
+</body>
+
+</html>
