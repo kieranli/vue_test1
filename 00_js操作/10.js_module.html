@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>10.js_module</title>
+</head>
+
+<body>
+    <!-- 
+        JS module是es6中的语法，用来模块化的开发。使用export、import语法，有三种对外暴露方式：分别暴露、统一暴露、默认暴露。
+        JS module并不能在普通的js文件中使用
+        export和import关键字仅可在模块系统（如vue项目中）中使用----所以不能在普通的js脚本中使用
+
+        在html中引用：
+        <script type="module">
+            import qwe from './text.js'
+        
+            qwe.a() // 'a'
+            qwe.b() // 'b'
+        </script>
+        html引用注意点：
+        1.type = "module" 必须标识
+        2.引用路径必须使用相对路径
+        3.文件名不能省略 .js 后缀
+        4.必须使用 Live Server 插件运行（vs中安装即可）
+     -->
+    <script type="text/javaScript">
+        // 1、分别暴露
+            // test.js中的模块
+            export function a(){
+                console.log('a');
+            }
+            export function b(){
+                console.log('b');
+            }
+            // index.js中引入
+            import {a,b} from './text.js'
+            a() // 'a'
+            b() // 'b'
+        // 2、统一暴露
+            // test.js中的模块
+            function a(){
+                console.log('a');
+            }
+            function b(){
+                console.log('b');
+            }
+            export {a,b}
+            // index.js中引入
+            import {a,b} from './text.js'
+            a() // 'a'
+            b() // 'b'
+        // 3、默认暴露
+            // test.js中的模块
+            export default {
+                a(){
+                    console.log('a');
+                },
+                b(){
+                    console.log('b');
+                }
+            }
+            import qwe from './text.js'
+            qwe.a() // 'a'
+            qwe.b() // 'b'
+     </script>
+</body>
+
+</html>
