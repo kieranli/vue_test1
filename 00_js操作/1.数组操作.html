@@ -1,3 +1,11 @@
+<!--
+ * @Author: kieranli 1010950547@qq.com
+ * @Date: 2022-07-19 11:15:28
+ * @LastEditors: kieranli 1010950547@qq.com
+ * @LastEditTime: 2022-08-17 18:30:26
+ * @FilePath: \vue_test1d:\1A-Src(勿删)\vue_basic\00_js操作\1.数组操作.html
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -73,6 +81,7 @@
         //     return p>2
         // })
         // console.log(arr1)
+
         // 2、map和foreach的区别
         // ①forEach()方法不会返回执行结果，二十undefined
         // ②map()方法会得到一个新的数组
@@ -82,10 +91,18 @@
         //     console.log(val) //1,5,4,2,3,NaN,2,NaN,5
         // })
         // map适用于需要改变数值时，且能返回一个新的数组,例如：
-        let arr2=arr.map((val)=>{
-            return val=val*2
-        }).filter(val=>val>5)//简写原式为.filter((val)=>{return val>5})
-        console.log(arr2)
+        // let arr2=arr.map((val)=>{
+        //     return val=val*2
+        // }).filter(val=>val>5)//简写原式为.filter((val)=>{return val>5})
+        // console.log(arr2)
+
+        //语法array.reduce((pre,current)=>{},0),pre为前一次的返回值，current为当前操作值，0为默认的第一次运行时的pre值
+        // reduce的返回值为最后一次运行的返回值
+        const x=arr.reduce((pre,current)=>{
+          console.log('@',pre,current)
+          return pre + 1
+        },0)
+        console.log(x)
     </script>
 </body>
 </html>
